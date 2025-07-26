@@ -40,3 +40,10 @@ steps:
       ArtifactName: 'drop'
       publishLocation: 'Container'
     displayName: 'Publish build artifact'
+
+  - script: |
+      echo "Listing ECommerce directory:"
+      ls -la $(projectRoot)
+      echo "Listing src directory:"
+      ls -la $(projectRoot)/src
+    displayName: 'Debug: list directory contents'
