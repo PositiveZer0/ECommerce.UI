@@ -20,17 +20,17 @@ steps:
     displayName: 'Install Node.js'
 
   - script: |
+      npm install
+      npm run build
+    workingDirectory: '$(projectRoot)'
+    displayName: 'Install dependencies and build React app'
+
+  - script: |
      echo "Listing ECommerce directory:"
      ls -la $(projectRoot)
      echo "Listing src directory:"
      ls -la $(projectRoot)/src
     displayName: 'Debug: list directory contents'
-
-  - script: |
-      npm install
-      npm run build
-    workingDirectory: '$(projectRoot)'
-    displayName: 'Install dependencies and build React app'
 
   - task: ArchiveFiles@2
     inputs:
