@@ -11,7 +11,7 @@ pool:
 
 variables:
   projectRoot: 'ECommerce'
-  buildOutput: '$(projectRoot)/build'
+  buildOutput: '$(projectRoot)/dist'
 
 steps:
   - task: NodeTool@0
@@ -24,13 +24,6 @@ steps:
       npm run build
     workingDirectory: '$(projectRoot)'
     displayName: 'Install dependencies and build React app'
-
-  - script: |
-     echo "Listing ECommerce directory:"
-     ls -la $(projectRoot)
-     echo "Listing src directory:"
-     ls -la $(projectRoot)/src
-    displayName: 'Debug: list directory contents'
 
   - task: ArchiveFiles@2
     inputs:
