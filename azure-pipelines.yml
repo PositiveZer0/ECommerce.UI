@@ -9,6 +9,10 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  projectRoot: 'ECommerce'
+  buildOutput: '$(projectRoot)/dist'
+
 steps:
   - task: NodeTool@0
     inputs:
@@ -18,5 +22,22 @@ steps:
   - script: |
       npm install
       npm run build
-    displayName: 'npm install and build'
-    workingDirectory: 'ECommerce'
+    workingDirectory: '$(projectRoot)'
+    displayName: 'Install dependencies and build React app'
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(buildOutput)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
+    displayName: 'Archive React build output'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
+    displayName: 'Publish build artifact'
+
